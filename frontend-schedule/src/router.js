@@ -20,7 +20,8 @@ const router = {
   error: ErrorComponent,
 }
 
-const navigate = (routes) => {
+const navigate = (pathname) => {
+  const routes = pathname.slice(1).split('/')
   let current = router
 
   for (const segment of routes) {
@@ -38,9 +39,9 @@ const navigate = (routes) => {
 export const mountRoute = async () => {
   const href = (window.location.href).replace(/\/+$/, '')
   if (window.location.href.at(-1) === '/') history.replaceState(undefined, undefined, href)
-  const routes = href.split('/').slice(3)
+  const { pathname } = new URL(href);
 
-  const element = navigate(routes)
+  const element = navigate(pathname)
   const app = document.querySelector('#app')
   app.innerHTML = await element()
 }
@@ -48,8 +49,8 @@ export const mountRoute = async () => {
 document.addEventListener('click', async (event) => {
   const baseUrl = window.location.href
   const link = event.target.closest('a')
-  const href = link.getAttribute('href')
   if (link) {
+    const href = link.getAttribute('href')
     event.preventDefault()
     history.pushState(undefined, undefined, `${baseUrl}/${href}`)
     mountRoute()
