@@ -5,7 +5,7 @@ import globals from 'globals'
 
 export default defineConfig([
   {
-    ignores: ['backend/public/**', 'frontend-admin/dist/**', 'frontend-schedule/dist/**'],
+    ignores: ['backend/builds/**', 'frontend-admin/dist/**', 'frontend-schedule/dist/**'],
   },
   stylistic.configs.recommended,
   {

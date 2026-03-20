@@ -2,7 +2,7 @@ import { handlers } from '../../core/init'
 import Modal from '../../../src/components/ui/Modal'
 import styles from './Page.module.css'
 
-export default async function Teachers() {
+export default async function Page() {
   async function fetchTeachers() {
     try {
       const response = await fetch('/apiv1/teachers')

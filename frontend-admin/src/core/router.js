@@ -1,7 +1,7 @@
-import Calls from '../components/Calls'
-import Classes from '../components/Classes'
-import Groups from '../components/Groups'
-import Subjects from '../components/Subjects'
+import Calls from '../pages/calls/Page'
+import Classes from '../pages/classes/Page'
+import Groups from '../pages/groups/Page'
+import Subjects from '../pages/subjects/Page'
 import Teachers from '../pages/teachers/Page'
 
 export default {

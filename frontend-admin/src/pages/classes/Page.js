@@ -1,3 +1,3 @@
-export default function Classes() {
+export default function Page() {
   return `<h1>Аудитории</h1>`
 }
