@@ -11,15 +11,13 @@ export default function TeachersCrudModal() {
 
   const form = `
   <form class="${styles.modal}" data-id="${id}">
-    <label for="fio">ФИО</label>
-    <input type="text" id="fio" />
-    <label for="abbr">Сокращение</label>
-    <input type="text" id="abbr" />
-    <label for="position">Должность</label>
-    <input type="text" id="position" />
-    <button type="submit">Отправить форму</button>
+    <h3>Добавить преподавателя</h3>
+    <input type="text" id="fio" placeholder="ФИО" />
+    <input type="text" id="abbr" placeholder="Сокращение" />
+    <input type="text" id="position" placeholder="Должность" />
+    <button type="submit">Добавить</button>
   </form>
   `
 
-  return `${Modal('teachersCrudModal', form)}`
+  return `${Modal(form)}`
 }

@@ -1,5 +1,8 @@
 const handlers = {
   id: 0,
+  closeModal: () => {
+    document.querySelector('.modal-overlay').classList.add('hidden')
+  },
   getId: function () { return ++this.id },
 }
 
