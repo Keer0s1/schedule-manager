@@ -3,7 +3,7 @@ import { addWindows, sortLessonsByDays } from '../../lib/helpers/sortHelpers.js'
 import styles from './Page.module.css'
 import BreadCrumbs from '../../components/BreadCrumbs.jsx'
 import { fetchLessons } from '../../lib/data.js'
-import PageNavigation from '../../components/PageNavigation.js'
+import PageNavigation from '../../components/PageNavigation.jsx'
 import { parseUrl } from '../../lib/helpers/urlHelpers.js'
 import { h } from '../../../h.js'
 
