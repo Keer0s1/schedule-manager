@@ -1,10 +1,10 @@
 export const handlers = {
   id: 0,
-  openModal: (selector) => {
-    document.querySelector(selector).classList.add('show')
+  openModal: (modalId) => {
+    document.getElementById(modalId).classList.add('show')
   },
-  closeModal: (selector) => {
-    document.querySelector(selector).classList.remove('show')
+  closeModal: (modalId) => {
+    document.getElementById(modalId).classList.remove('show')
   },
   showFlashMessage: ({ type, message }) => {
     const flashContainer = document.querySelector('.flash-message')

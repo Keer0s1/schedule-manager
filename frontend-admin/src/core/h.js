@@ -1,6 +1,6 @@
 export function h(tag, props, ...children) {
   if (typeof tag === 'function') {
-    return tag(props)
+    return tag({ ...props, children: children.flat() })
   }
 
   const attrs = props
