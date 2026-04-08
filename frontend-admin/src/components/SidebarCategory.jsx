@@ -1,4 +1,4 @@
-import { registerHandler } from '../core/handlers'
+import { registerClick } from '../core/handlers'
 import Router from '../core/router'
 import render from '../core/render'
 
@@ -8,7 +8,7 @@ export default function SidebarCategory({ text }) {
   const onClick = async () => {
     render('#main', content)
   }
-  const id = registerHandler(onClick)
+  const id = registerClick(onClick)
 
   return <li data-id={id}>{text}</li>
 }

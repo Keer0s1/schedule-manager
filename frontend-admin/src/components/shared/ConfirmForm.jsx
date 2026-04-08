@@ -1,8 +1,8 @@
-import { registerHandler } from '../../core/handlers'
+import { registerSubmit } from '../../core/handlers'
 import styles from './ConfirmForm.module.css'
 
 export default function ConfirmForm({ message, onConfirm }) {
-  const id = registerHandler(onConfirm)
+  const id = registerSubmit(onConfirm)
   
   return (
     <form class={styles.confirmForm} data-id={id} id="confirmForm">

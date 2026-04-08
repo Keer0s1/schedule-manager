@@ -1,5 +1,7 @@
 export const handlers = {
   id: 0,
+  click: {},
+  submit: {},
   openModal: (modalId) => {
     document.getElementById(modalId).classList.add('show')
   },
@@ -18,25 +20,31 @@ export const handlers = {
   getId: function () { return ++this.id },
 }
 
-export const registerHandler = (handler) => {
+export const registerClick = (handler) => {
   const id = handlers.getId()
-  handlers[id] = handler
+  handlers.click[id] = handler
+  return id
+}
+
+export const registerSubmit = (handler) => {
+  const id = handlers.getId()
+  handlers.submit[id] = handler
   return id
 }
 
 export const initHandlers = () => {
   const handleClick = (e) => {
     const { id } = e.target.dataset
-    if (handlers[id]) {
-      handlers[id](e)
+    if (handlers.click[id]) {
+      handlers.click[id](e)
     }
   }
 
   const handleSubmit = (e) => {
     const { id } = e.target.dataset
     e.preventDefault()
-    if (handlers[id]) {
-      handlers[id](e)
+    if (handlers.submit[id]) {
+      handlers.submit[id](e)
     }
   }
 

@@ -1,7 +1,7 @@
 import styles from './Page.module.css'
 import { fetchTeachers } from '../../lib/data'
-import TeachersCrudModal from './components/UpsertTeacherForm'
-import { handlers, registerHandler } from '../../core/handlers'
+import UpsertTeacherForm from './components/UpsertTeacherForm'
+import { handlers, registerSubmit, registerClick } from '../../core/handlers'
 import { deleteTeacher } from '../../lib/actions'
 import render from '../../core/render'
 import Modal from '../../components/shared/Modal'
@@ -10,7 +10,7 @@ import ConfirmForm from '../../components/shared/ConfirmForm'
 export default async function Page() {
   const teachers = await fetchTeachers()
   const showModalUpsertTeacher = () => {
-    handlers.openModal('upsertTeacher')
+    handlers.openModal('createTeacher')
   }
   const showModalDeleteTeacher = (e) => {
     const confirmForm = document.querySelector('#confirmForm')
@@ -18,8 +18,8 @@ export default async function Page() {
     confirmForm.dataset.teacherid = teacherid
     handlers.openModal('deleteTeacher')
   }
-  const idUpsert = registerHandler(showModalUpsertTeacher)
-  const idDelete = registerHandler(showModalDeleteTeacher)
+  const idUpsert = registerClick(showModalUpsertTeacher)
+  const idDelete = registerClick(showModalDeleteTeacher)
 
   const onConfirm = async () => {
     const confirmForm = document.querySelector('#confirmForm')
@@ -56,8 +56,8 @@ export default async function Page() {
         </tbody>
       </table>
       <button data-id={idUpsert}>Добавить преподавателя</button>
-      <Modal modalId="upsertTeacher">
-        <TeachersCrudModal />
+      <Modal modalId="createTeacher">
+        <UpsertTeacherForm closeId="createTeacher"/>
       </Modal>
       <Modal modalId="deleteTeacher">
         <ConfirmForm message="Подтвердите удаление преподавателя" onConfirm={onConfirm}/>

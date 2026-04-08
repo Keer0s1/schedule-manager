@@ -1,11 +1,11 @@
-import { handlers, registerHandler } from "../../core/handlers"
+import { handlers, registerClick } from "../../core/handlers"
 
 export default function Modal({ modalId, children }) {
   const onClose = () => {
     handlers.closeModal(modalId)  
   }
 
-  const closeBtnId = registerHandler(onClose)
+  const closeBtnId = registerClick(onClose)
   
   return (
     <div id={modalId} class='modal-overlay hidden'>
