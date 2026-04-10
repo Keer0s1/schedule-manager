@@ -7,10 +7,10 @@ import TeachersPage from '../pages/teachers/TeachersPage.jsx'
 export default {
   routes: {
     Звонки: CallsPage,
-    Группы: ClassesPage,
-    Предметы: GroupsPage,
-    Преподаватели: SubjectsPage,
-    Аудитории: TeachersPage,
+    Группы: GroupsPage,
+    Предметы: SubjectsPage,
+    Преподаватели: TeachersPage,
+    Аудитории: ClassesPage,
   },
 
   async getRoute(route) {
