@@ -5,35 +5,32 @@ import SubjectsPage from '../pages/subjects/SubjectsPage.jsx'
 import TeachersPage from '../pages/teachers/TeachersPage.jsx'
 import ClassesPage from '../pages/classes/ClassesPage.jsx'
 import GroupsPage from '../pages/groups/GroupsPage.jsx'
+import render from './render.js'
 
 console.log('load')
 
 const routes = [
-  { path: '/admin', component: App },
-  { path: '/admin/teachers', component: TeachersPage },
-  { path: '/admin/bells', component: BellsPage },
-  { path: '/admin/subjects', component: SubjectsPage },
-  { path: '/admin/classes', component: ClassesPage },
-  { path: '/admin/groups', component: GroupsPage },
+  { path: '/admin', component: App, parentSelector: '#app' },
+  { path: '/admin/teachers', component: TeachersPage, parentSelector: '#main' },
+  { path: '/admin/bells', component: BellsPage, parentSelector: '#main' },
+  { path: '/admin/subjects', component: SubjectsPage, parentSelector: '#main' },
+  { path: '/admin/classes', component: ClassesPage, parentSelector: '#main' },
+  { path: '/admin/groups', component: GroupsPage, parentSelector: '#main' },
 ]
 
-const navigate = (pathname) => {
-  const route = routes
-    .find((route) => {
-      const pattern = route.path.replace(/:[^/]+/g, '([^/]+)') + '/?$'
-      const regex = new RegExp('^' + pattern)
-      return regex.test(pathname)
-    })
-  return route ? route.component : ErrorPage
-}
+const navigate = pathname => routes
+  .find((route) => {
+    const pattern = route.path.replace(/:[^/]+/g, '([^/]+)') + '/?$'
+    const regex = new RegExp('^' + pattern)
+    return regex.test(pathname)
+  }) || { component: ErrorPage, parentSelector: '#app' }
 
 export const mountRoute = async () => {
   const href = (window.location.href).replace(/\/+$/, '')
   if (window.location.href.at(-1) === '/') history.replaceState({}, '', href)
   const { pathname } = new URL(href)
-  const content = navigate(pathname)
-  const app = document.querySelector('#app')
-  app.innerHTML = await content()
+  const { component, parentSelector } = navigate(pathname)
+  render(parentSelector, component())
 }
 
 document.addEventListener('click', async (event) => {

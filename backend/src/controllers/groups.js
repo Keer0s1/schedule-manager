@@ -12,7 +12,7 @@ export const getGroups = async (fastify) => {
 }
 
 export const createGroup = async (fastify, data) => {
-  console.log(11, data);
+  console.log(11, data)
   const client = await fastify.pg.connect()
   try {
     await client.query(groupsQueries.create, [
