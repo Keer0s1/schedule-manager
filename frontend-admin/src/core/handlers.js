@@ -2,6 +2,10 @@ export const handlers = {
   id: 0,
   click: {},
   submit: {},
+  clean: function () {
+    this.click = {}
+    this.submit = {}
+  },
   openModal: (modalId) => {
     document.getElementById(modalId).classList.add('show')
   },
@@ -21,6 +25,7 @@ export const handlers = {
 }
 
 export const registerClick = (handler) => {
+  console.log(handlers.click);
   const id = handlers.getId()
   handlers.click[id] = handler
   return id

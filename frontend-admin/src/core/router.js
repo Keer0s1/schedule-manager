@@ -6,7 +6,7 @@ import TeachersPage from '../pages/teachers/TeachersPage.jsx'
 import ClassesPage from '../pages/classes/ClassesPage.jsx'
 import GroupsPage from '../pages/groups/GroupsPage.jsx'
 import render from './render.js'
-import Sidebar from '../components/shared/Sidebar.jsx'
+import { handlers } from './handlers.js'
 
 console.log('load')
 
@@ -31,6 +31,7 @@ export const mountRoute = async () => {
   if (window.location.href.at(-1) === '/') history.replaceState({}, '', href)
   const { pathname } = new URL(href)
   const { component, parentSelector } = navigate(pathname)
+  handlers.clean()
   render(parentSelector, component())
 }
 
