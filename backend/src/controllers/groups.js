@@ -12,7 +12,6 @@ export const getGroups = async (fastify) => {
 }
 
 export const createGroup = async (fastify, data) => {
-  console.log(11, data)
   const client = await fastify.pg.connect()
   try {
     await client.query(groupsQueries.create, [
@@ -21,6 +20,33 @@ export const createGroup = async (fastify, data) => {
       data.abbreviation,
     ])
     return { message: 'Группа добавлена!' }
+  }
+  finally {
+    client.release()
+  }
+}
+
+export const updateGroup = async (fastify, data) => {
+  const client = await fastify.pg.connect()
+  try {
+    await client.query(groupsQueries.update, [
+      data.name,
+      data.abbreviation,
+      data.year_of_admission,
+      data.id,
+    ])
+    return { message: 'Данные группы обновлены!' }
+  }
+  finally {
+    client.release()
+  }
+}
+
+export const deleteGroup = async (fastify, groupId) => {
+  const client = await fastify.pg.connect()
+  try {
+    await client.query(groupsQueries.delete, [groupId])
+    return { message: 'Группа удалена!' }
   }
   finally {
     client.release()

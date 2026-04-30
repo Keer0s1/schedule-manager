@@ -8,7 +8,7 @@ export default async function BellsPage() {
 
   return (
     <>
-      <div className="content">
+      <div class="content">
         <PageTitle title="Звонки" />
         <BellsTable bells={[]} />
       </div>

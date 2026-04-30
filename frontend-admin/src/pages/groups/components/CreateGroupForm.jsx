@@ -4,7 +4,7 @@ import { render } from '../../../core/render'
 import GroupsPage from '../GroupsPage'
 import { createGroup } from '../../../api/groups'
 
-export default function CreateGroupForm({ closeId }) {
+export default function CreateGroupForm() {
   const onSubmit = async (e) => {
     const formData = new FormData(e.target)
     const data = {
@@ -13,7 +13,7 @@ export default function CreateGroupForm({ closeId }) {
       year_of_admission: formData.get('year_of_admission'),
     }
     const result = await createGroup(data)
-    handlers.closeModal(closeId)
+    handlers.closeModal()
     handlers.showFlashMessage(result)
     render('#main', <GroupsPage />)
   }

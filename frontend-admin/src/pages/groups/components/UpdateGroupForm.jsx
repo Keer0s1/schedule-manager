@@ -1,30 +1,30 @@
 import styles from './GroupForm.module.css'
 import { handlers } from '../../../core/handlers'
-import { updateTeacher } from '../../../api/teachers'
 import { render } from '../../../core/render'
 import GroupsPage from '../GroupsPage'
+import { updateGroup } from '../../../api/groups'
 
-export default function UpdateGroupForm({ closeId, teacher }) {
+export default function UpdateGroupForm({ group }) {
   const onSubmit = async (e) => {
     const formData = new FormData(e.target)
     const data = {
-      fio: formData.get('fio'),
-      abbr: formData.get('abbr'),
-      position: formData.get('position'),
-      id: teacher.id,
+      name: formData.get('name'),
+      abbreviation: formData.get('abbreviation'),
+      year_of_admission: formData.get('year_of_admission'),
+      id: group.id,
     }
-    const result = await updateTeacher(data)
-    handlers.closeModal(closeId)
+    const result = await updateGroup(data)
+    handlers.closeModal()
     handlers.showFlashMessage(result)
     render('#main', <GroupsPage />)
   }
 
   return (
-    <form class={styles.modal} onSubmit={onSubmit} id="updateTeacherForm">
-      <h3>Редактировать преподавателя</h3>
-      <input type="text" name="fio" placeholder="ФИО" required value={teacher.name} />
-      <input type="text" name="abbr" placeholder="Сокращение" required value={teacher.fio} />
-      <input type="text" name="position" placeholder="Должность" value={teacher.position} />
+    <form class={styles.modal} onSubmit={onSubmit} id="updateGroupForm">
+      <h3>Редактировать группу</h3>
+      <input type="text" name="name" placeholder="ФИО" required value={group.name} />
+      <input type="text" name="abbreviation" placeholder="Должность" value={group.abbreviation} />
+      <input type="text" name="year_of_admission" placeholder="Сокращение" required value={group.year_of_admission} />
       <button type="submit">Редактировать</button>
     </form>
   )

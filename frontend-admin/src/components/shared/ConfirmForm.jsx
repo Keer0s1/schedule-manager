@@ -1,6 +1,11 @@
 import styles from './ConfirmForm.module.css'
 
-export default function ConfirmForm({ message, onConfirm, onCancel }) {
+export default function ConfirmForm({ message, onConfirm }) {
+  const onCancel = () => {
+    const modal = document.querySelector('.show')
+    modal.classList.remove('show')
+
+  }
   
   return (
     <form class={styles.confirmForm} onSubmit={onConfirm} id="confirmForm">
