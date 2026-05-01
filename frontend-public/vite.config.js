@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   base: '/public',
@@ -20,4 +20,4 @@ export default defineConfig({
     jsxFactory: 'h',
     jsxInject: `import { h } from '/src/core/h.js'`,
   },
-})
+});

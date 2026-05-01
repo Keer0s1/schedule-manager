@@ -1,10 +1,10 @@
-import { getBells } from '../controllers/bells.js'
+import { getBells } from '../controllers/bells.js';
 
 export default async function teachersRoutes(fastify) {
   fastify.get('/bells', async (req, reply) => {
-    const bells = await getBells(fastify)
-    reply.send(bells)
-  })
+    const bells = await getBells(fastify);
+    reply.send(bells);
+  });
 
   // fastify.post('/teachers', async (req, reply) => {
   //   const result = await createTeacher(fastify, req.body)

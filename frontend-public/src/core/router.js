@@ -1,10 +1,10 @@
-import Teachers from '../pages/teachers/Page.jsx'
-import Schedule from '../pages/lessons/Page.jsx'
-import App from '../App.jsx'
-import ErrorPage from '../pages/Error.jsx'
-import Groups from '../pages/groups/Page.jsx'
+import Teachers from '../pages/teachers/Page.jsx';
+import Schedule from '../pages/lessons/Page.jsx';
+import App from '../App.jsx';
+import ErrorPage from '../pages/Error.jsx';
+import Groups from '../pages/groups/Page.jsx';
 
-console.log('load')
+console.log('load');
 
 const routes = [
   { path: '/public', component: App },
@@ -12,39 +12,39 @@ const routes = [
   { path: '/public/groups', component: Groups },
   { path: '/public/teachers/:id/lessons', component: Schedule },
   { path: '/public/groups/:id/lessons', component: Schedule },
-]
+];
 
 const navigate = (pathname) => {
   const route = routes
     .find((route) => {
-      const pattern = route.path.replace(/:[^/]+/g, '([^/]+)') + '/?$'
-      const regex = new RegExp('^' + pattern)
-      return regex.test(pathname)
-    })
-  return route ? route.component : ErrorPage
-}
+      const pattern = route.path.replace(/:[^/]+/g, '([^/]+)') + '/?$';
+      const regex = new RegExp('^' + pattern);
+      return regex.test(pathname);
+    });
+  return route ? route.component : ErrorPage;
+};
 
 export const mountRoute = async () => {
-  const href = (window.location.href).replace(/\/+$/, '')
-  if (window.location.href.at(-1) === '/') history.replaceState({}, '', href)
-  const { pathname } = new URL(href)
-  const content = navigate(pathname)
-  const app = document.querySelector('#app')
-  app.innerHTML = await content()
-}
+  const href = (window.location.href).replace(/\/+$/, '');
+  if (window.location.href.at(-1) === '/') history.replaceState({}, '', href);
+  const { pathname } = new URL(href);
+  const content = navigate(pathname);
+  const app = document.querySelector('#app');
+  app.innerHTML = await content();
+};
 
 document.addEventListener('click', async (event) => {
-  const link = event.target.closest('a')
+  const link = event.target.closest('a');
   if (link) {
-    const href = link.getAttribute('href')
-    event.preventDefault()
+    const href = link.getAttribute('href');
+    event.preventDefault();
     if (href === 'back') {
-      history.back()
-      return
+      history.back();
+      return;
     }
-    history.pushState({}, '', `${href}`)
-    mountRoute()
+    history.pushState({}, '', `${href}`);
+    mountRoute();
   }
-})
+});
 
-window.addEventListener('popstate', () => mountRoute())
+window.addEventListener('popstate', () => mountRoute());

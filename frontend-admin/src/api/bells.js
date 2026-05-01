@@ -1,15 +1,15 @@
 async function fetchBells() {
   try {
-    const response = await fetch('/apiv1/bells')
+    const response = await fetch('/apiv1/bells');
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
   }
   catch (error) {
-    console.error('Fetch error:', error)
+    console.error('Fetch error:', error);
   }
 }
 
-export { fetchBells }
+export { fetchBells };

@@ -2,48 +2,48 @@ export const handlers = {
   _id: 0,
   click: {},
   submit: {},
-  getId: function () { return ++this._id },
-}
+  getId: function () { return ++this._id; },
+};
 
 export const registerClick = (handler) => {
-  const id = handlers.getId()
-  handlers.click[id] = handler
-  return id
-}
+  const id = handlers.getId();
+  handlers.click[id] = handler;
+  return id;
+};
 
 export const registerSubmit = (handler) => {
-  const id = handlers.getId()
-  handlers.submit[id] = handler
-  return id
-}
+  const id = handlers.getId();
+  handlers.submit[id] = handler;
+  return id;
+};
 
 export function cleanDeadHandlers() {
   for (const id in handlers.click) {
-    const element = document.querySelector(`[data-handler="${id}"]`)
-    if (!element) delete handlers.click[id]
+    const element = document.querySelector(`[data-handler="${id}"]`);
+    if (!element) delete handlers.click[id];
   }
   for (const id in handlers.submit) {
-    const element = document.querySelector(`[data-handler="${id}"]`)
-    if (!element) delete handlers.submit[id]
+    const element = document.querySelector(`[data-handler="${id}"]`);
+    if (!element) delete handlers.submit[id];
   }
 }
 
 export const initListeners = () => {
   const handleClick = (e) => {
-    const { handler } = e.target.dataset
+    const { handler } = e.target.dataset;
     if (handlers.click[handler]) {
-      handlers.click[handler](e)
+      handlers.click[handler](e);
     }
-  }
+  };
 
   const handleSubmit = (e) => {
-    const { handler } = e.target.dataset
-    e.preventDefault()
+    const { handler } = e.target.dataset;
+    e.preventDefault();
     if (handlers.submit[handler]) {
-      handlers.submit[handler](e)
+      handlers.submit[handler](e);
     }
-  }
+  };
 
-  document.addEventListener('click', handleClick)
-  document.addEventListener('submit', handleSubmit)
-}
+  document.addEventListener('click', handleClick);
+  document.addEventListener('submit', handleSubmit);
+};
