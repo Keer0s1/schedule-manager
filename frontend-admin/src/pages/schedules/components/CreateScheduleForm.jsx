@@ -35,13 +35,13 @@ export default function CreateScheduleForm({ closeId }) {
       <input type="number" name="lessonsInDay" placeholder="Количество пар в день" required min="1" max="8" />
       
       <div class={styles.weekdays}>
-        <label><input type="checkbox" name="weekday_1" value="1" /> Пн</label>
-        <label><input type="checkbox" name="weekday_2" value="2" /> Вт</label>
-        <label><input type="checkbox" name="weekday_3" value="3" /> Ср</label>
-        <label><input type="checkbox" name="weekday_4" value="4" /> Чт</label>
-        <label><input type="checkbox" name="weekday_5" value="5" /> Пт</label>
-        <label><input type="checkbox" name="weekday_6" value="6" /> Сб</label>
-        <label><input type="checkbox" name="weekday_7" value="7" /> Вс</label>
+        <label><input type="checkbox" checked name="weekday_1" value="1" /> Пн</label>
+        <label><input type="checkbox" checked name="weekday_2" value="2" /> Вт</label>
+        <label><input type="checkbox" checked name="weekday_3" value="3" /> Ср</label>
+        <label><input type="checkbox" checked name="weekday_4" value="4" /> Чт</label>
+        <label><input type="checkbox" checked name="weekday_5" value="5" /> Пт</label>
+        <label><input type="checkbox" checked name="weekday_6" value="6" /> Сб</label>
+        <label><input type="checkbox" checked name="weekday_7" value="7" /> Вс</label>
       </div>
       
       <button type="submit">Добавить</button>

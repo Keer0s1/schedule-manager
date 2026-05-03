@@ -6,11 +6,20 @@ import SchedulesPage from "../SchedulesPage";
 import styles from "./SchedulesTable.module.css"
 import UpdateScheduleForm from "./UpdateScheduleForm";
 import { ui } from "../../../utils/dom";
+import { redirect } from "../../../core/router";
+import state from "../../../state";
+import Sidebar from "../../../shared/Sidebar";
 
 export default function SchedulesTable({ schedules }) {
   let scheduleToDelete;
   let scheduleToUpdate = {};
-  
+
+  const redirectToLessons = (scheduleId) => {
+    state.currentScheduleIndex = scheduleId
+    redirect(`/admin/lessons/${scheduleId}`)
+    render('#sidebarContainer', <Sidebar />)
+  }
+
   const onConfirm = async () => {
     const result = await deleteSchedule(scheduleToDelete)
     ui.closeModal()
@@ -24,7 +33,7 @@ export default function SchedulesTable({ schedules }) {
     render('#updateSchedule-content', <UpdateScheduleForm closeId="updateSchedule" schedule={scheduleToUpdate} />)
     ui.openModal('updateSchedule')
   }
-  
+
   const showModalDeleteSchedule = (scheduleId) => {
     scheduleToDelete = scheduleId
     ui.openModal('deleteSchedule')
@@ -45,7 +54,7 @@ export default function SchedulesTable({ schedules }) {
         </thead>
         <tbody>
           {schedules.map(schedule => (
-            <tr key={schedule.id}>
+            <tr key={schedule.id} onClick={() => redirectToLessons(schedule.id)}>
               <td>{schedule.name}</td>
               <td>{new Date(schedule.created).toLocaleDateString()}</td>
               <td>{schedule.lessonsInDay}</td>

@@ -16,7 +16,7 @@ const routes = [
   { path: '/admin/subjects', component: SubjectsPage, parentSelector: '#main' },
   { path: '/admin/classes', component: ClassesPage, parentSelector: '#main' },
   { path: '/admin/groups', component: GroupsPage, parentSelector: '#main' },
-  { path: '/admin/lessons', component: LessonsPage, parentSelector: '#main' },
+  { path: '/admin/lessons/:id', component: LessonsPage, parentSelector: '#main' },
   { path: '/admin/schedules', component: SchedulesPage, parentSelector: '#main' },
 ];
 

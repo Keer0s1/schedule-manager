@@ -30,7 +30,10 @@ export function cleanDeadHandlers() {
 
 export const initListeners = () => {
   const handleClick = (e) => {
-    const { handler } = e.target.dataset;
+    const { handler } = e.target.closest('[data-handler]')
+      ? e.target.closest('[data-handler]').dataset
+      : { handler: null };
+
     if (handlers.click[handler]) {
       handlers.click[handler](e);
     }
