@@ -7,7 +7,7 @@ import Pair from './Pair';
 export default function PairSection({ lessons }) {
   const showModalCreateLesson = () => ui.openModal('createLesson')
   return (
-    <div class={styles.rightPanel}>
+    <>
       <button
         class={styles.addButton}
         onClick={showModalCreateLesson}
@@ -15,6 +15,6 @@ export default function PairSection({ lessons }) {
         Добавить нагрузку
       </button>
       {lessons.map((lesson) => <Pair lesson={lesson}/>)}
-    </div>
+    </>
   )
 }

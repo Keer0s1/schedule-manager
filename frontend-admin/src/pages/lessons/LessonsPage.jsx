@@ -11,7 +11,7 @@ export default async function LessonsPage() {
   const [, , , scheduleId] = pathname.split('/')
   const test = await fetchLessonsByScheduleId(scheduleId);
   const { schedule, lessons, groups, subjects, teachers } = test;
-  
+
   if (!schedule) {
     return <div>Расписание не найдено</div>;
   }
@@ -33,9 +33,12 @@ export default async function LessonsPage() {
       <div class={styles.bottomContainer}>
         <div id="infoSection" class={styles.leftPanel}>
 
-        <InfoSection />
+          <InfoSection />
         </div>
-        <PairSection lessons={lessons}/>
+        <div id="pairSection" class={styles.rightPanel}>
+
+          <PairSection lessons={lessons} />
+        </div>
       </div>
       <Modal modalId="createLesson">
         <CreateLessonsForm teachers={teachers} groups={groups} subjects={subjects} scheduleId={scheduleId} />

@@ -36,4 +36,10 @@ export const redirect = (route) => {
   mountRoute();
 };
 
+export const refreshPage = () => {
+  const currentUrl = window.location.href;
+  history.replaceState({}, '', currentUrl);
+  mountRoute();
+};
+
 window.addEventListener('popstate', () => mountRoute());
