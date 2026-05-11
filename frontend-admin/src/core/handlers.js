@@ -33,10 +33,10 @@ export const registerMouseLeave = (handler) => {
 };
 
 export const registerContextMenu = (handler) => {
-  const id = handlers.getId()
-  handlers.contextmenu[id] = handler
-  return id
-}
+  const id = handlers.getId();
+  handlers.contextmenu[id] = handler;
+  return id;
+};
 
 export function cleanDeadHandlers() {
   for (const id in handlers.click) {
@@ -103,14 +103,14 @@ export const initListeners = () => {
       : { handler: null };
 
     if (handlers.contextmenu[contextmenu]) {
-      e.preventDefault()
-      handlers.contextmenu[contextmenu](e)
+      e.preventDefault();
+      handlers.contextmenu[contextmenu](e);
     }
-  }
+  };
 
   document.addEventListener('click', handleClick);
   document.addEventListener('submit', handleSubmit);
   document.addEventListener('mouseenter', handleMouseEnter, true);
   document.addEventListener('mouseleave', handleMouseLeave, true);
-  document.addEventListener('contextmenu', handleContextMenu)
+  document.addEventListener('contextmenu', handleContextMenu);
 };

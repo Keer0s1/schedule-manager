@@ -1,4 +1,5 @@
 import Sidebar from "./shared/Sidebar";
+import ContextMenu from "./ui/ContextMenu";
 
 export default function App() {
   return (
@@ -10,6 +11,7 @@ export default function App() {
         Главная страница
       </main>
       <div class="flash-message"></div>
+      <ContextMenu/>
     </>
   )
 }

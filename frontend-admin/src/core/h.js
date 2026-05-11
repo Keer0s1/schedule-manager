@@ -31,9 +31,9 @@ export function h(tag, props, ...children) {
     }
 
     if (props['onContextMenu']) {
-      const handlerId = registerContextMenu(props['onContextMenu'])
-      props['data-contextmenu'] = handlerId
-      delete props['onContextMenu']
+      const handlerId = registerContextMenu(props['onContextMenu']);
+      props['data-contextmenu'] = handlerId;
+      delete props['onContextMenu'];
     }
   }
 
@@ -43,9 +43,9 @@ export function h(tag, props, ...children) {
 
   const attrs = props
     ? Object.entries(props)
-      .filter(([, value]) => !!value) // убрал пустые классы типа 'class=""'
-      .map(([key, value]) => `${key}="${value}"`)
-      .join(' ')
+        .filter(([, value]) => !!value) // убрал пустые классы типа 'class=""'
+        .map(([key, value]) => `${key}="${value}"`)
+        .join(' ')
     : '';
 
   const childrenStr = children.flat().join('');
