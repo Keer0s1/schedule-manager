@@ -5,8 +5,9 @@ import styles from './LessonsTable.module.css'
 import TableCell from './TableCell';
 
 
-export default function LessonsTable({ lessons }) {
-  const { weekdays, groups, rows } = lessons
+export default function LessonsTable({ lessonsByGroups, weekdays, lessonsInDay }) {
+  console.log(1, lessonsByGroups);
+  console.log(2, weekdays);
   const { selectedGroup } = state.ui
 
 
@@ -15,7 +16,6 @@ export default function LessonsTable({ lessons }) {
       <thead>
         <tr>
           <th>День недели</th>
-
           {weekdays.map((day, idx) => (
             <th>{daysMap[day]}</th>
           ))}
@@ -28,11 +28,11 @@ export default function LessonsTable({ lessons }) {
         </tr>
       </thead>
       <tbody>
-        {groups.map((group) => (
+        {lessonsByGroups.map((group) => (
           <tr class={selectedGroup === group.id ? 'selectedGroup' : ''}>
             <td>{group.name}</td>
-            {rows.map((day) => (
-              <TableCell lessonsInDay={lessonsInDay} group={groupId} day={day} />
+            {group.weekdays.map((day) => (
+              <TableCell lessons={day.lessons} weekday={day.dayIndex} group={group}/>
             ))}
           </tr>
         ))}

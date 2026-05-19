@@ -6,7 +6,7 @@ import WorkloadsSection from './components/workloadsSection/WorkloadsSection'
 import styles from './LessonsPage.module.css'
 import InfoSection from './components/InfoSection';
 import { fetchWorkloads } from '../../api/workloads';
-import { scheduleToLessons } from '../../utils/lessons';
+import { scheduleToGroups } from '../../utils/lessons';
 import state from '../../state';
 
 export default async function LessonsPage() {
@@ -17,8 +17,9 @@ export default async function LessonsPage() {
   // const { lessons } = scheduleToLessons(scheduleData)
   const workloads = await fetchWorkloads(scheduleId)
   // const { subjects, teachers } = scheduleData;
-  const { weekdays, lessonsInDay, groups, teachers, subjects, schedule } = scheduleData
-  const data = scheduleToLessons(scheduleData)
+  const { groups, teachers, subjects, schedule } = scheduleData
+  const { weekdays, lessonsInDay } = schedule
+  const lessonsByGroups = scheduleToGroups(scheduleData)
 
   if (!scheduleData) {
     return <div>Расписание не найдено</div>;
@@ -31,11 +32,11 @@ export default async function LessonsPage() {
       </div>
 
       <div class={styles.tableWrapper}>
-        {/* <LessonsTable
-          lessons={lessons}
+        <LessonsTable
+          lessonsByGroups={lessonsByGroups}
           weekdays={weekdays}
           lessonsInDay={lessonsInDay}
-        /> */}
+        />
       </div>
 
       <div class={styles.bottomContainer}>
