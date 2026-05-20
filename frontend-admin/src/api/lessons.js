@@ -6,11 +6,11 @@ async function fetchLessons(scheduleId) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
+    console.log(123123123, data);
     return data;
   }
   catch (error) {
     console.error('Fetch error:', error);
-    return { schedule: null, scheduledLessons: [], groups: [], subjects: [], teachers: [], workloads: [] };
   }
 }
 

@@ -70,6 +70,9 @@ export const schedulesQueries = {
 };
 
 export const workloadsQueries = {
+  findById: `
+    SELECT lessons_per_week FROM workloads WHERE id = $1
+  `,
   getByScheduleId: `
     SELECT 
       w.id as "workloadId",
@@ -107,6 +110,14 @@ export const workloadsQueries = {
     WHERE id = $5
   `,
 
+  decrementWorkload: `
+  UPDATE workloads 
+  SET lessons_per_week = lessons_per_week - 1,
+      updated_at = CURRENT_TIMESTAMP
+  WHERE id = $1
+  RETURNING lessons_per_week
+`,
+
   delete: 'DELETE FROM workloads WHERE id = $1',
 };
 
@@ -139,32 +150,34 @@ export const lessonsQueries = {
   `,
 
   // Получить уроки по конкретному расписанию
+  // db/queries.js
+
   getByScheduleId: `
-    SELECT 
-      sl.id as "scheduledLessonId",
-      sl.schedule_id as "scheduleId",
-      sl.workload_id as "workloadId",
-      sl.weekday,
-      sl.lesson_number as "lessonNumber",
-      sl.classroom,
-      w.group_id as "groupId",
-      g.name as "groupName",
-      g.abbreviation as "groupAbbr",
-      w.teacher_id as "teacherId",
-      t.fio as "teacherName",
-      t.position as "teacherPosition",
-      w.subject_id as "subjectId",
-      s.name as "subjectName",
-      s.abbreviation as "subjectAbbr",
-      w.lessons_per_week as "lessonsPerWeek"
-    FROM schedule_lessons sl
-    JOIN workloads w ON sl.workload_id = w.id
-    JOIN groups g ON w.group_id = g.id
-    JOIN teachers t ON w.teacher_id = t.id
-    JOIN subjects s ON w.subject_id = s.id
-    WHERE sl.schedule_id = $1
-    ORDER BY g.name, sl.weekday, sl.lesson_number
-  `,
+  SELECT 
+    sl.id as "scheduledLessonId",
+    sl.schedule_id as "scheduleId",
+    sl.workload_id as "workloadId",
+    sl.weekday,
+    sl.lesson_number as "lessonNumber",
+    sl.classroom,
+    w.group_id as "groupId",
+    g.name as "groupName",
+    g.abbreviation as "groupAbbr",
+    w.teacher_id as "teacherId",
+    t.fio as "teacherName",
+    t.position as "teacherPosition",
+    w.subject_id as "subjectId",
+    s.name as "subjectName",
+    s.abbreviation as "subjectAbbr",
+    w.lessons_per_week as "lessonsPerWeek"
+  FROM schedule_lessons sl
+   JOIN workloads w ON sl.workload_id = w.id
+   JOIN groups g ON w.group_id = g.id
+   JOIN teachers t ON w.teacher_id = t.id
+   JOIN subjects s ON w.subject_id = s.id
+  WHERE sl.schedule_id = $1
+  ORDER BY g.name, sl.weekday, sl.lesson_number
+`,
 
   // Создать урок в расписании
   create: `

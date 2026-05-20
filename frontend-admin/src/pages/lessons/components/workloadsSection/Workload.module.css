@@ -1,6 +1,6 @@
-/* Pair.module.css */
+/* workload.module.css */
 
-.pair {
+.workload {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -12,14 +12,14 @@
   
 }
 
-.pair:hover {
+.workload:hover {
   background-color: #f8fafc;
   border-color: #cbd5e1;
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgb(0 0 0 / 5%);
 }
 
-.pair:active {
+.workload:active {
   transform: translateY(0);
 }
 
@@ -46,12 +46,12 @@
 }
 
 /* Активное состояние (если нужно выделить выбранную пару) */
-.pair.active {
+.workload.active {
   background-color: #eff6ff;
   border-color: #3b82f6;
 }
 
-.pair.active .lessonsCount {
+.workload.active .lessonsCount {
   background-color: #3b82f6;
   color: white;
 }

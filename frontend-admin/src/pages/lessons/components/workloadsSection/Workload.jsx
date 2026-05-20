@@ -4,7 +4,7 @@ import store from '../../../../state/store';
 import { deleteWorkload } from '../../../../api/workloads';
 import { ui } from '../../../../utils/dom';
 import InfoSection from '../InfoSection';
-import styles from './Pair.module.css'
+import styles from './Workload.module.css'
 
 export default function Workload({ workload }) {
 
@@ -22,7 +22,7 @@ export default function Workload({ workload }) {
       },
     ])
   }
-  const selectPair = () => {
+  const selectworkload = () => {
     store.ui.selectedGroup = workload.groupId
     store.ui.selectedWorkload = workload
     store.ui.workloadId = workload.id
@@ -36,8 +36,8 @@ export default function Workload({ workload }) {
   }
 
   return (
-    <div class={store.ui.workloadId === workload.id ? `${styles.pair} ${styles.active}` : `${styles.pair}` } onMouseEnter = { onMouseEnter }
-  onMouseLeave = { onMouseLeave } onClick = { selectPair } onContextMenu = { handleContextMenu } >
+    <div class={store.ui.workloadId === workload.id ? `${styles.workload} ${styles.active}` : `${styles.workload}` } onMouseEnter = { onMouseEnter }
+  onMouseLeave = { onMouseLeave } onClick = { selectworkload } onContextMenu = { handleContextMenu } >
       <div class={styles.subjectName}>{workload.subjectAbbr}</div>
       <div class={styles.divider}></div>
       <div class={styles.workloadsCount}>{workload.lessonsPerWeek}</div>

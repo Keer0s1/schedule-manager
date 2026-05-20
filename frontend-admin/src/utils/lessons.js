@@ -20,6 +20,8 @@ export const scheduleToGroups = (scheduleData) => {
 
   scheduleLessons.forEach((lesson) => {
     const currentGroup = newGroups.find(group => group.id === lesson.groupId);
+    console.log(122, lesson);
+    console.log(123, newGroups);
     const currentWeekday = currentGroup.weekdays.find(weekday => weekday.dayIndex === lesson.weekday);
     const currentLesson = currentWeekday.lessons[lesson.lessonNumber - 1];
     currentLesson.text = lesson.groupAbbr;

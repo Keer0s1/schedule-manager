@@ -1,5 +1,5 @@
-// routes/workloads.js
 import { createWorkload, updateWorkload, deleteWorkload, getWorkloadByScheduleId } from '../controllers/workloads.js';
+import { decrementWorkload } from '../controllers/workloads.js';
 
 export default async function workloadsRoutes(fastify) {
   fastify.get('/workloads/schedule/:scheduleId', async (req, reply) => {
@@ -17,6 +17,13 @@ export default async function workloadsRoutes(fastify) {
   // Обновить нагрузку
   fastify.put('/workloads', async (req, reply) => {
     const result = await updateWorkload(fastify, req.body);
+    reply.send(result);
+  });
+
+  // Уменьшить нагрузку на 1
+  fastify.patch('/workloads/:id/decrement', async (req, reply) => {
+    const { id } = req.params;
+    const result = await decrementWorkload(fastify, parseInt(id, 10));
     reply.send(result);
   });
 

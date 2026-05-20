@@ -54,4 +54,21 @@ async function deleteWorkload(workloadId) {
   }
 }
 
-export { fetchWorkloads, createWorkload, deleteWorkload };
+async function decrementWorkload(workloadId) {
+
+  try {
+    const response = await fetch(`/apiv1/workloads/${workloadId}/decrement`, {
+      method: 'PATCH',
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const message = await response.json();
+    return { type: 'success', ...message };
+  }
+  catch (error) {
+    return { type: 'error', message: error.message };
+  }
+}
+
+export { fetchWorkloads, createWorkload, deleteWorkload, decrementWorkload };

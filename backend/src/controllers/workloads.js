@@ -54,6 +54,58 @@ export const updateWorkload = async (fastify, data) => {
   }
 };
 
+export const decrementWorkload = async (fastify, workloadId) => {
+  const client = await fastify.pg.connect();
+  try {
+    const { rows: [workload] } = await client.query(
+      'SELECT lessons_per_week FROM workloads WHERE id = $1',
+      [workloadId]
+    );
+
+    console.log('Текущее значение:', workload?.lessons_per_week);
+
+    if (!workload) {
+      return { type: 'error', message: 'Нагрузка не найдена' };
+    }
+
+    // В decrementWorkload
+    if (workload.lessons_per_week === 1) {
+      // Просто обнуляем до 0, НЕ УДАЛЯЕМ
+      await client.query('UPDATE workloads SET lessons_per_week = 0 WHERE id = $1', [workloadId]);
+      return { type: 'success', message: 'Нагрузка полностью использована' };
+    }
+
+    // Уменьшаем на 1
+    const { rows: [updated] } = await client.query(
+      'UPDATE workloads SET lessons_per_week = lessons_per_week - 1 WHERE id = $1 RETURNING lessons_per_week',
+      [workloadId]
+    );
+
+    console.log('После уменьшения:', updated.lessons_per_week);
+
+    // Если после уменьшения стало 0 — удаляем
+    if (updated.lessons_per_week === 0) {
+      await client.query('DELETE FROM workloads WHERE id = $1', [workloadId]);
+      return {
+        type: 'success',
+        message: 'Нагрузка полностью использована и удалена'
+      };
+    }
+
+    return {
+      type: 'success',
+      message: 'Количество оставшихся пар: ' + updated.lessons_per_week
+    };
+  }
+  catch (error) {
+    console.error('Error:', error);
+    return { type: 'error', message: error.message };
+  }
+  finally {
+    client.release();
+  }
+};
+
 export const deleteWorkload = async (fastify, workloadId) => {
   const client = await fastify.pg.connect();
   try {

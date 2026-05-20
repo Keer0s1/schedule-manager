@@ -1,4 +1,5 @@
 import { setLesson } from '../../../../api/lessons.js';
+import { decrementWorkload } from '../../../../api/workloads.js';
 import { refreshPage } from '../../../../core/router.js';
 import store from '../../../../state/store.js';
 import { ui } from '../../../../utils/dom.js';
@@ -14,11 +15,11 @@ export default function TableCell({ lessons, weekday, group }) {
     console.log(2, store.ui.selectedWorkload);
     console.log(1, {...store.ui.selectedWorkload, lessonNumber, scheduleId: store.currentScheduleId, weekday});
     const result = await setLesson({...store.ui.selectedWorkload, lessonNumber, scheduleId: store.currentScheduleId, weekday})
+    decrementWorkload(store.ui.selectedWorkload.workloadId)
     ui.showFlashMessage(result)
     refreshPage()
   }
 
-  // const pairsInDay = lessonsToArray(lessonsInDay)
   return (
     <td>
       <div class={styles.pairsContainer}>

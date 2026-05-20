@@ -20,6 +20,8 @@ export const getLessonsByScheduleId = async (fastify, scheduleId) => {
       [scheduleId],
     );
 
+    console.log('ROWS', scheduleLessons);
+
     // Получаем информацию о расписании
     const { rows: scheduleInfo } = await client.query(`
       SELECT id, name, lessons_in_day as "lessonsInDay", weekdays
