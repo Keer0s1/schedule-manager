@@ -19,6 +19,7 @@ export const createSchedule = async (fastify, data) => {
     const { rows: [schedule] } = await client.query(schedulesQueries.create, [
       data.name,
       data.lessonsInDay,
+      data.type,
       data.weekdays,
     ]);
 

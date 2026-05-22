@@ -1,4 +1,4 @@
-import { registerClick, registerContextMenu, registerMouseEnter, registerMouseLeave, registerSubmit } from './handlers';
+import { registerChange, registerClick, registerContextMenu, registerMouseEnter, registerMouseLeave, registerSubmit } from './handlers';
 
 export function h(tag, props, ...children) {
   if (tag === 'Fragment') {
@@ -16,6 +16,12 @@ export function h(tag, props, ...children) {
       const handlerId = registerSubmit(props['onSubmit']);
       props['data-submit'] = handlerId;
       delete props['onSubmit'];
+    }
+
+    if (props['onChange']) {
+      const handlerId = registerChange(props['onChange'])
+      props['data-change'] = handlerId
+      delete props['onChange']
     }
 
     if (props['onMouseEnter']) {
@@ -43,9 +49,9 @@ export function h(tag, props, ...children) {
 
   const attrs = props
     ? Object.entries(props)
-        .filter(([, value]) => !!value) // убрал пустые классы типа 'class=""'
-        .map(([key, value]) => `${key}="${value}"`)
-        .join(' ')
+      .filter(([, value]) => !!value) // убрал пустые классы типа 'class=""'
+      .map(([key, value]) => `${key}="${value}"`)
+      .join(' ')
     : '';
 
   const childrenStr = children.flat().join('');

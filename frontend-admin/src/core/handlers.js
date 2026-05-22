@@ -2,6 +2,7 @@ export const handlers = {
   _id: 0,
   click: {},
   submit: {},
+  change: {},
   mouseenter: {},
   mouseleave: {},
   contextmenu: {},
@@ -19,6 +20,12 @@ export const registerSubmit = (handler) => {
   handlers.submit[id] = handler;
   return id;
 };
+
+export const registerChange = (handler) => {
+  const id = handlers.getId()
+  handlers.change[id] = handler
+  return id
+}
 
 export const registerMouseEnter = (handler) => {
   const id = handlers.getId();
@@ -46,6 +53,10 @@ export function cleanDeadHandlers() {
   for (const id in handlers.submit) {
     const element = document.querySelector(`[data-submit="${id}"]`);
     if (!element) delete handlers.submit[id];
+  }
+  for (const id in handlers.change) {
+    const element = document.querySelector(`[data-change="${id}"]`);
+    if (!element) delete handlers.change[id];
   }
   for (const id in handlers.mouseenter) {
     const element = document.querySelector(`[data-mouseenter="${id}"]`);
@@ -79,6 +90,13 @@ export const initListeners = () => {
     }
   };
 
+  const handleChange = (e) => {
+    const { change } = e.target.dataset
+    if (handlers.change[change]) {
+      handlers.change[change](e)
+    }
+  }
+
   const handleMouseEnter = (e) => {
     if (e.target.dataset) {
       const { mouseenter } = e.target.dataset;
@@ -110,6 +128,7 @@ export const initListeners = () => {
 
   document.addEventListener('click', handleClick);
   document.addEventListener('submit', handleSubmit);
+  document.addEventListener('change', handleChange);
   document.addEventListener('mouseenter', handleMouseEnter, true);
   document.addEventListener('mouseleave', handleMouseLeave, true);
   document.addEventListener('contextmenu', handleContextMenu);

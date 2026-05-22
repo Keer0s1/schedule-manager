@@ -67,7 +67,7 @@ export default async function SchedulesPage() {
           />
         </div>
         <Modal modalId="createSchedule">
-          <CreateScheduleForm closeId="createSchedule" />
+          <CreateScheduleForm type="template" />
         </Modal>
         <Modal modalId="updateSchedule" />
         <Modal modalId="deleteSchedule" />

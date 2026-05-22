@@ -5,7 +5,16 @@ import { render } from '../../../core/render'
 import SchedulesPage from '../SchedulesPage'
 import { ui } from '../../../utils/dom'
 
-export default function CreateScheduleForm() {
+export default function CreateScheduleForm({ type }) {
+
+  const setScheduleType = (e) => {
+    const startDateInput = document.querySelector('#startDate')
+    const scheduleType = e.target.value
+    scheduleType === 'period'
+      ? startDateInput.classList.remove('hidden')
+      : startDateInput.classList.add('hidden')
+  }
+
   const onSubmit = async (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
@@ -15,6 +24,7 @@ export default function CreateScheduleForm() {
     const data = {
       name: formData.get('name'),
       lessonsInDay: parseInt(formData.get('lessonsInDay')),
+      type: formData.get('type'),
       weekdays: weekdays,
     }
     const result = await createSchedule(data)
@@ -26,8 +36,21 @@ export default function CreateScheduleForm() {
   return (
     <form class={pages.form} onSubmit={onSubmit}>
       <h3>Добавить расписание</h3>
+
       <input type="text" name="name" placeholder="Название расписания" required />
+
       <input type="number" name="lessonsInDay" placeholder="Количество пар в день" required min="1" max="8" />
+
+      <label htmlFor="type">Тип расписания:</label>
+      <select name="type" id='type' onChange={(e) => setScheduleType(e)} required>
+        <option value="template">Шаблон</option>
+        <option value="period">Период</option>
+      </select>
+
+      <label id="startDate" class="hidden">
+        Дата начала:
+        <input type="date" name="startDate" required />
+      </label>
 
       <div class={styles.weekdays}>
         <label><input type="checkbox" checked name="weekdays" value="1" /> Пн</label>
@@ -35,11 +58,11 @@ export default function CreateScheduleForm() {
         <label><input type="checkbox" checked name="weekdays" value="3" /> Ср</label>
         <label><input type="checkbox" checked name="weekdays" value="4" /> Чт</label>
         <label><input type="checkbox" checked name="weekdays" value="5" /> Пт</label>
-        <label><input type="checkbox" checked name="weekdays" value="6" /> Сб</label>
-        <label><input type="checkbox" checked name="weekdays" value="7" /> Вс</label>
+        <label><input type="checkbox" name="weekdays" value="6" /> Сб</label>
+        <label><input type="checkbox" name="weekdays" value="7" /> Вс</label>
       </div>
 
       <button type="submit">Добавить</button>
-    </form>
+    </form >
   )
 }
