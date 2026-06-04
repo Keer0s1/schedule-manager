@@ -8,7 +8,8 @@ import { parseUrl } from '../../lib/helpers/urlHelpers.js'
 
 export default async function Page() {
   const { category } = parseUrl(window.location.href)
-  const { startDate, lessons, group } = await fetchLessons(category)
+  const data = await fetchLessons(category)
+  console.log(22, data);
   const sortedLessons = sortLessonsByDays(lessons)
   const days = Object.keys(sortedLessons)
   const breadcrumbs = [
