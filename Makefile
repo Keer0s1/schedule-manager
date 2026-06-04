@@ -32,14 +32,14 @@ lint-fix:
 	npx stylelint "frontend-admin/globals.css" "frontend-admin/src/**/*.css" --fix
 	npx stylelint "frontend-public/globals.css" "frontend-public/src/**/*.css" --fix
 
-pre-push: lint-fix
+pre-commit: lint-fix
 	@echo "✅ lint checks passed"
 
 install-git-hooks:
 	mkdir -p .git/hooks
-	echo '#!/bin/sh' > .git/hooks/pre-push
-	echo 'make pre-push || exit 1' >> .git/hooks/pre-push
-	chmod +x .git/hooks/pre-push
+	echo '#!/bin/sh' > .git/hooks/pre-commit
+	echo 'make pre-commit || exit 1' >> .git/hooks/pre-commit
+	chmod +x .git/hooks/pre-commit
 	git config core.hooksPath .git/hooks
 	@echo "✅ Git hooks installed"
 
