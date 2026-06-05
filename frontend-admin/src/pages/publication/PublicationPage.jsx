@@ -1,20 +1,47 @@
 import PageTitle from '../../shared/PageTitle'
 import pages from '../pages.module.css'
 import styles from './PublicationPage.module.css'
+import { deletePublications, fetchPublications, publishSchedules } from '../../api/publications.js'
+import { refreshPage } from '../../core/router.js'
+import { ui } from '../../utils/dom.js'
+import { getWeekRange, isPublicationsFresh } from '../../utils/date.js'
+import { fetchSchedules } from '../../api/schedules.js'
 
-export default function PublicationPage() {
-  const publicationInfo = {
-    url: '',
-    lastPublishedAt: '-',
+export default async function PublicationPage() {
+  const publications = await fetchPublications()
+  const schedules = await fetchSchedules()
+
+  const publishPeriodSchedules = async () => {
+    const result = await publishSchedules()
+    ui.showFlashMessage(result)
+    refreshPage()
   }
 
-  const publishedSchedules = []
+  const removePeriodSchedules = async () => {
+    const result = await deletePublications()
+    ui.showFlashMessage(result)
+    refreshPage()
+  }
 
   return (
     <div class={`content ${pages.crudPage}`}>
       <div class={pages.crudHeader}>
         <PageTitle title="Публикация расписания" />
-        <button class={pages.addButton}>ОПУБЛИКОВАТЬ</button>
+        <div class={styles.actionButtons}>
+          {publications.length > 0 ? (
+            <>
+              <button
+                class={`${pages.addButton} ${!isPublicationsFresh(publications, schedules) ? styles.disabledButton : ''}`}
+                disabled={!isPublicationsFresh(publications, schedules)}
+              >
+                ОБНОВИТЬ ПУБЛИКАЦИЮ
+              </button>
+              <button class={`${pages.tableActionButton} ${pages.tableDeleteButton} ${styles.deleteButton}`} onClick={removePeriodSchedules}>УДАЛИТЬ ПУБЛИКАЦИЮ</button>
+            </>
+          ) : (
+            <button class={pages.addButton} onClick={publishPeriodSchedules}>ОПУБЛИКОВАТЬ</button>
+          )}
+        </div>
       </div>
 
       <div class={styles.publicationContent}>
@@ -22,15 +49,9 @@ export default function PublicationPage() {
           <tbody>
             <tr>
               <td>Ссылка на опубликованное расписание</td>
-              <td>
-                {publicationInfo.url
-                  ? <a href={publicationInfo.url}>{publicationInfo.url}</a>
-                  : <span class={styles.emptyValue}>-</span>}
-              </td>
             </tr>
             <tr>
               <td>Дата последней публикации</td>
-              <td>{publicationInfo.lastPublishedAt}</td>
             </tr>
           </tbody>
         </table>
@@ -45,10 +66,10 @@ export default function PublicationPage() {
               </tr>
             </thead>
             <tbody>
-              {publishedSchedules.map(schedule => (
+              {publications.map(publication => (
                 <tr>
-                  <td>{schedule.name}</td>
-                  <td>{schedule.period}</td>
+                  <td>{publication.schedule_name}</td>
+                  <td>{getWeekRange(publication.start_date)}</td>
                 </tr>
               ))
               }
