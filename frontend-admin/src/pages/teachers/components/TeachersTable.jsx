@@ -20,7 +20,7 @@ export default function TeachersTable({ teachers, onEdit, onDelete }) {
               <td>{teacher.name}</td>
               <td>{teacher.fio}</td>
               <td>{teacher.position}</td>
-              <td>{teacher.color}</td>
+              <td><span class={styles.colorBadge} style={`background: ${teacher.color};`}></span></td>
               <td><button class={`${styles.tableActionButton} ${styles.tableEditButton}`} onClick={() => onEdit(teacher)}>Редактировать</button></td>
               <td><button class={`${styles.tableActionButton} ${styles.tableDeleteButton}`} onClick={() => onDelete(teacher)}>Удалить</button></td>
             </tr>
